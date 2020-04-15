@@ -117,10 +117,8 @@ fn _start() callconv(.Naked) noreturn {
             );
         },
         .powerpc64le => {
-            // Need noat here because LLVM is free to pick any register
             starting_stack_ptr = asm (
-                \\ .set noat
-                \\ lwz 1, %[argc]
+                \\ ld 1, 0(%[argc])
                 : [argc] "=r" (-> [*]usize)
             );
         },
