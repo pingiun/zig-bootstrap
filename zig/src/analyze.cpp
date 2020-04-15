@@ -1006,6 +1006,8 @@ bool want_first_arg_sret(CodeGen *g, FnTypeId *fn_type_id) {
         return abi_class == X64CABIClass_MEMORY || abi_class == X64CABIClass_MEMORY_nobyval;
     } else if (g->zig_target->arch == ZigLLVM_mipsel) {
         return false;
+    } else if (g->zig_target->arch == ZigLLVM_ppc64le) {
+        return true;
     }
     zig_panic("TODO implement C ABI for this architecture. See https://github.com/ziglang/zig/issues/1481");
 }

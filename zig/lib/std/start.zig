@@ -116,6 +116,14 @@ fn _start() callconv(.Naked) noreturn {
                 : [argc] "=r" (-> [*]usize)
             );
         },
+        .powerpc64le => {
+            // Need noat here because LLVM is free to pick any register
+            starting_stack_ptr = asm (
+                \\ .set noat
+                \\ lwz 1, %[argc]
+                : [argc] "=r" (-> [*]usize)
+            );
+        },
         else => @compileError("unsupported arch"),
     }
     // If LLVM inlines stack variables into _start, they will overwrite
